@@ -5,13 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -23,122 +25,313 @@ public class HelloController {
     @FXML
     protected void onHelloButtonClick() {
 
-            Stage primaryStage = new Stage();
-            primaryStage.setTitle("Person Information");
 
-            GridPane grid = new GridPane();
-            grid.setPadding(new Insets(10, 10, 10, 10));
-            grid.setVgap(8);
-            grid.setHgap(10);
-
-            // Create labels and text fields
-            Label nameLabel = new Label("Name:");
-            TextField nameField = new TextField();
-            Label idLabel = new Label("National ID:");
-            TextField idField = new TextField();
-            Label genderLabel = new Label("Gender:");
-            TextField genderField = new TextField();
-            Label locationLabel = new Label("Location:");
-            TextField locationField = new TextField();
-            Label ageLabel = new Label("Age:");
-            TextField ageField = new TextField();
-            Label phoneLabel = new Label("Phone Number:");
-            TextField phoneField = new TextField();
-            Label jopLabel = new Label("JopTitle:");
-            TextField jopfield = new TextField();
-            Label emLabel = new Label("emdate:");
-            TextField emfield = new TextField();
-            // Labels to display person information
-            Label displayLabel = new Label("");
-            // Create a button
-            Button showButton = new Button("Show Person");
-            Button Next=new Button("Next");
-            //Next.setOnAction(event -> );
-
-           Label setDepartmentlabel = new Label("Select Department");
-           ComboBox<String> setDepartment =new ComboBox<>();
-           setDepartment.getItems().addAll("CS","Control","Communication");
-           setDepartment.setPromptText("Select Department");
-           // setDepartment.setOnAction(event -> );
+       Stage studentStage = new Stage();
+        studentStage.setTitle("نافذة الموظف");
 
 
-            // Add labels and text fields to the grid
-            grid.add(nameLabel, 0, 0);
-            grid.add(nameField, 1, 0);
+        Button loginButton = new Button(" login");
+        Button registerButton = new Button("sign in");
 
-            grid.add(idLabel, 0, 1);
-            grid.add(idField, 1, 1);
 
-            grid.add(genderLabel, 0, 2);
-            grid.add(genderField, 1, 2);
+        loginButton.setOnAction(e -> {
+            w();
+            System.out.println("تم تسجيل الدخول");
+        });
 
-            grid.add(locationLabel, 0, 3);
-            grid.add(locationField, 1, 3);
+        registerButton.setOnAction(e -> {
+            w1();
+            System.out.println("تم التسجيل");
 
-            grid.add(ageLabel, 0, 4);
-            grid.add(ageField, 1, 4);
 
-            grid.add(phoneLabel, 0, 5);
-            grid.add(phoneField, 1, 5);
 
-            grid.add(jopLabel, 0, 6);
-            grid.add(jopfield, 1, 6);
 
-            grid.add(emLabel, 0, 7);
-            grid.add(emfield, 1, 7);
+        });
 
-            grid.add(setDepartmentlabel,0,8);
-            grid.add(setDepartment,1,8,2,1);
+        // تكوين تخطيط النوافذ الفرعية
+        VBox subSceneLayout = new VBox(10);
+        subSceneLayout.getChildren().addAll(loginButton, registerButton);
+        subSceneLayout.setAlignment(Pos.CENTER);
 
-            grid.add(showButton, 0, 9, 2, 1); // Span two columns for the button
-            grid.add(Next, 0, 10, 2, 1); // Span two columns for the display label
-            grid.add(displayLabel, 0, 11, 2, 1);
 
-        // Define action for the button
-            showButton.setOnAction(e -> {
-                try {
-                    String name = nameField.getText();
-                    int nationalId = Integer.parseInt(idField.getText());
-                    GENDER gender = GENDER.valueOf(genderField.getText().toUpperCase());
-                    String location = locationField.getText();
-                    int age = Integer.parseInt(ageField.getText());
-                    int phoneNumber = Integer.parseInt(phoneField.getText());
-                    JopTitle jop = JopTitle.valueOf(jopfield.getText());
-                    String edate = emfield.getText();
+        Scene studentScene = new Scene(subSceneLayout, 200, 150);
+        studentStage.setScene(studentScene);
 
-                    // Create an Employee object
-                    Employee employee = new Employee(name, nationalId, gender, location, age, phoneNumber, jop, edate);
+        studentStage.initModality(Modality.APPLICATION_MODAL);
 
-                    // Display the person information
-                    displayLabel.setText("Person Information:\n" +
-                            "Name: " + employee.getName() + "\n" +
-                            "National ID: " + employee.getNationalId() + "\n" +
-                            "Gender: " + employee.getType() + "\n" +
-                            "Location: " + employee.getLocation() + "\n" +
-                            "Age: " + employee.getAge() + "\n" +
-                            "Phone Number: " + employee.getPhoneNumber() + "\n" +
-                            "Job Title: " + employee.getJobTitle() + "\n" +
-                            "Employment Date: " + employee.getEmploymentDate());
-                } catch (IllegalArgumentException ex) {
-                    displayLabel.setText("Error: " + ex.getMessage());
-                }
-            });
+        // عرض نافذة الطالب
+        studentStage.showAndWait();
 
-            // Create a scene and set it to the stage
-            Scene scene = new Scene(grid, 400, 400);
-            primaryStage.setScene(scene);
 
-            // Show the stage
-            primaryStage.show();
         }
 
 
 
 
-        //-----------------------------------------------------------
+
+   private void w1() {
+
+
+       Stage primaryStage = new Stage();
+       primaryStage.setTitle("Person Information");
+
+       GridPane grid = new GridPane();
+       grid.setPadding(new Insets(10, 10, 10, 10));
+       grid.setVgap(8);
+       grid.setHgap(10);
+
+       // Create labels and text fields
+       Label nameLabel = new Label("Name:");
+       TextField nameField = new TextField();
+       Label idLabel = new Label("National ID:");
+       TextField idField = new TextField();
+       Label genderLabel = new Label("Gender:");
+       TextField genderField = new TextField();
+       Label locationLabel = new Label("Location:");
+       TextField locationField = new TextField();
+       Label ageLabel = new Label("Age:");
+       TextField ageField = new TextField();
+       Label phoneLabel = new Label("Phone Number:");
+       TextField phoneField = new TextField();
+       Label jopLabel = new Label("JopTitle:");
+       TextField jopfield = new TextField();
+       Label emLabel = new Label("employeedate:");
+       TextField emfield = new TextField();
+       // Labels to display person information
+       Label displayLabel = new Label("");
+       // Create a button
+       Button showButton = new Button("Show Person");
+       Button Next = new Button("confirm");
+       ComboBox<String> setDepartment = new ComboBox<>();
+       Next.setOnAction(event ->
+
+       {
+           Database.elogin(nameField.getText(),Integer.parseInt(idField.getText())
+                   ,GENDER.valueOf(genderField.getText().toUpperCase()),
+                   locationField.getText(),
+                   Integer.parseInt(ageField.getText()),
+                   Integer.parseInt(phoneField.getText()),
+                   JopTitle.valueOf(jopfield.getText().toUpperCase()),
+                   emfield.getText(),CollegeDepartments.valueOf(setDepartment.getValue()));
+           // Call a method to show college details window
+
+           try {
+               String jopTitle = jopfield.getText();
+               String selectedDepartment = setDepartment.getValue();
+
+               if ("dean".equalsIgnoreCase(jopTitle) && "CS".equalsIgnoreCase(selectedDepartment)) {
+                   start000();
+               } else if ("professor".equalsIgnoreCase(jopTitle) && "CS".equalsIgnoreCase(selectedDepartment)) {
+                   start123();
+
+               }
+           } catch (Exception ex) {
+               displayLabel.setText("Error: " + ex.getMessage());
+           }
+       });
+
+       Label setDepartmentlabel = new Label("Select Department");
+       setDepartment.getItems().addAll("CS", "CONTROL", "COMMUNICATION");
+       setDepartment.setPromptText("Select Department");
+       // setDepartment.setOnAction(event -> );
+
+
+       // Add labels and text fields to the grid
+       grid.add(nameLabel, 0, 0);
+       grid.add(nameField, 1, 0);
+
+       grid.add(idLabel, 0, 1);
+       grid.add(idField, 1, 1);
+
+       grid.add(genderLabel, 0, 2);
+       grid.add(genderField, 1, 2);
+
+       grid.add(locationLabel, 0, 3);
+       grid.add(locationField, 1, 3);
+
+       grid.add(ageLabel, 0, 4);
+       grid.add(ageField, 1, 4);
+
+       grid.add(phoneLabel, 0, 5);
+       grid.add(phoneField, 1, 5);
+
+       grid.add(jopLabel, 0, 6);
+       grid.add(jopfield, 1, 6);
+
+       grid.add(emLabel, 0, 7);
+       grid.add(emfield, 1, 7);
+
+       grid.add(setDepartmentlabel, 0, 8);
+       grid.add(setDepartment, 1, 8, 2, 1);
+
+       grid.add(showButton, 0, 9, 2, 1); // Span two columns for the button
+       grid.add(Next, 0, 10, 2, 1); // Span two columns for the display label
+       grid.add(displayLabel, 0, 11, 2, 1);
+
+       // Define action for the button
+       showButton.setOnAction(e -> {
+           try {
+               String name = nameField.getText();
+               int nationalId = Integer.parseInt(idField.getText());
+               GENDER gender = GENDER.valueOf(genderField.getText().toUpperCase());
+               String location = locationField.getText();
+               int age = Integer.parseInt(ageField.getText());
+               int phoneNumber = Integer.parseInt(phoneField.getText());
+               JopTitle jop = JopTitle.valueOf(jopfield.getText());
+               String edate = emfield.getText();
+
+               // Create an Employee object
+               Employee employee = new Employee(name, nationalId, gender, location, age, phoneNumber, jop, edate);
+
+               // Display the person information
+               displayLabel.setText("Person Information:\n" +
+                       "Name: " + employee.getName() + "\n" +
+                       "National ID: " + employee.getNationalId() + "\n" +
+                       "Gender: " + employee.getType() + "\n" +
+                       "Location: " + employee.getLocation() + "\n" +
+                       "Age: " + employee.getAge() + "\n" +
+                       "Phone Number: " + employee.getPhoneNumber() + "\n" +
+                       "Job Title: " + employee.getJobTitle() + "\n" +
+                       "Employment Date: " + employee.getEmploymentDate());
+           } catch (IllegalArgumentException ex) {
+               displayLabel.setText("Error: " + ex.getMessage());
+           }
+       });
+
+       // Create a scene and set it to the stage
+       Scene scene = new Scene(grid, 400, 400);
+       primaryStage.setScene(scene);
+
+       // Show the stage
+       primaryStage.show();
+   }
+
+
+    private void w() {
+        Stage loginStage = new Stage();
+        loginStage.setTitle("نافذة تسجيل الدخول");
+
+        TextField nameField = new TextField();
+        PasswordField passwordField = new PasswordField();
+        Button confirmButton = new Button("confirm");
+        Label jopLabel = new Label("JopTitle:");
+        TextField jopfield = new TextField();
+        ComboBox<String> setDepartment = new ComboBox<>();
+        Label setDepartmentlabel = new Label("Select Department");
+        setDepartment.getItems().addAll("CS", "Control", "Communication");
+        setDepartment.setPromptText("Select Department");
+        //
+        Label displayLabel = new Label("");
+
+        VBox loginLayout = new VBox(10);
+        loginLayout.getChildren().addAll(
+                new Label("name:"),
+                nameField,
+                new Label("nationalId:"),
+                passwordField,
+                new Label("JopTitle:"),
+                jopfield,
+                new Label("Select Department"),
+                setDepartment,
+
+                confirmButton
+        );
+
+        confirmButton.setOnAction(e -> {
+            if( Database.elogiin(nameField.getText(),
+                    Integer.parseInt(passwordField.getText())
+                    ,JopTitle.valueOf(jopfield.getText().toUpperCase()),
+                    CollegeDepartments.valueOf(setDepartment.getValue())
+            )==true) {
+
+                try {
+
+
+                    String jopTitle = jopfield.getText().toUpperCase();
+                    String selectedDepartment = setDepartment.getValue().toUpperCase();
+
+                    if ("DEAN".equalsIgnoreCase(jopTitle)) {
+                        start000();
+                    } else if ("PROFFESOR".equalsIgnoreCase(jopTitle) && "CS".equalsIgnoreCase(selectedDepartment) ||
+                            "PROFFESOR".equalsIgnoreCase(jopTitle) && "CONTROL".equalsIgnoreCase(selectedDepartment) ||
+                            "PROFFESOR".equalsIgnoreCase(jopTitle) && "COMMUNICATION".equalsIgnoreCase(selectedDepartment)) {
+                        start123();
+                    } else {
+                        Error("Please select", "Invalid INPUT", Alert.AlertType.WARNING);
+                    }
+
+
+                } catch (Exception ex) {
+                    displayLabel.setText("Error: " + ex.getMessage());
+                }
+            }
+            loginStage.close();
+        });
+
+        Scene loginScene = new Scene(loginLayout, 300, 400);
+        loginStage.setScene(loginScene);
+
+        loginStage.initModality(Modality.APPLICATION_MODAL);
+
+        loginStage.showAndWait();
+    }
+    private void Error(String title, String content, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
+
+
+    //-----------------------------------------------------------
           //زرار الطالب =================
 
+
+
     public void startff() {
+
+
+        Stage studentStage = new Stage();
+        studentStage.setTitle("نافذة الطالب");
+
+        // إنشاء زرين في نافذة الطالب
+        Button loginButton = new Button(" login");
+        Button registerButton = new Button("sign in");
+
+        // تحديد أحداث النقر لكل زر
+        loginButton.setOnAction(e -> {
+            w2();
+        });
+
+        registerButton.setOnAction(e -> {
+
+            student();
+
+
+        });
+
+        // تكوين تخطيط النوافذ الفرعية
+        VBox subSceneLayout = new VBox(10);
+        subSceneLayout.getChildren().addAll(loginButton, registerButton);
+        subSceneLayout.setAlignment(Pos.CENTER);
+
+
+        Scene studentScene = new Scene(subSceneLayout, 200, 150);
+        studentStage.setScene(studentScene);
+
+        studentStage.initModality(Modality.APPLICATION_MODAL);
+
+
+        // عرض نافذة الطالب
+        studentStage.showAndWait();
+
+}
+
+
+    private void student() {
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Person Information");
 
@@ -147,17 +340,11 @@ public class HelloController {
         grid.setVgap(12);
         grid.setHgap(10);
 
-        Button showCollegeDetailsButton = new Button("  Next");
-
-
+        Button showCollegeDetailsButton = new Button("  confirm");
         // Add the new button to the grid
         grid.add(showCollegeDetailsButton, 0, 10, 2, 1); // Span two columns for the button
 
-        // Define action for the new button
-        showCollegeDetailsButton.setOnAction(e -> {
-            // Call a method to show college details window
-            window2();
-        });
+
         // Create labels and text fields
         Label nameLabel = new Label("Name:");
         TextField nameField = new TextField();
@@ -183,6 +370,13 @@ public class HelloController {
 
         // Labels to display person information
         Label displayLabel = new Label("");
+        showCollegeDetailsButton.setOnAction(e -> {
+            Database.slogin(nameField.getText(),Integer.parseInt(idField.getText()),
+                    GENDER.valueOf(genderField.getText().toUpperCase()),
+                    locationField.getText(),Double.parseDouble(secSchoolgradeField.getText()),
+                    Integer.parseInt(ageField.getText()),Integer.parseInt(phoneField.getText()));
+                 window2();
+        });
 
         // Create a button
         Button showButton = new Button("Show Person");
@@ -247,7 +441,46 @@ public class HelloController {
 
         // Show the stage
         primaryStage.show();
-}
+
+    }
+
+
+
+    private void w2() {
+        Stage loginStage = new Stage();
+        loginStage.setTitle("نافذة تسجيل الدخول");
+
+        TextField nameField = new TextField();
+        PasswordField passwordField = new PasswordField();
+        Button confirmButton = new Button("confirm");
+
+
+        VBox loginLayout = new VBox(10);
+        loginLayout.getChildren().addAll(
+                new Label("name:"),
+                nameField,
+                new Label("nationalId:"),
+                passwordField,
+                confirmButton
+        );
+
+        confirmButton.setOnAction(e -> {
+          if(Database.logiin(nameField.getText(), Integer.parseInt(passwordField.getText()))==true){
+
+              window2();
+          }
+
+
+
+        });
+
+        Scene loginScene = new Scene(loginLayout, 300, 200);
+        loginStage.setScene(loginScene);
+
+        loginStage.initModality(Modality.APPLICATION_MODAL);
+
+        loginStage.showAndWait();
+    }
 
 ////////////////////////////////////////////////////////////////
    //المعلومات الخاصه بالكليه
@@ -422,6 +655,7 @@ public class HelloController {
 
 
     ///////////////////////////////////////////////////////////////////////////////////////
+    ///    الاسر
     public void start() {
         Stage primaryStage=new Stage();
         primaryStage.setTitle("Family App");
@@ -455,6 +689,7 @@ public class HelloController {
                     showStudentServices(selectedFamilyType);
                 }
             }
+            primaryStage.close();
         });
 
         Scene scene = new Scene(grid, 400, 100);
@@ -463,7 +698,6 @@ public class HelloController {
     }
 
     private void showLeaderServices(String familyType) {
-        Family currentFamily = createFamilyInstance(familyType);
         Stage leaderStage = new Stage();
         leaderStage.setTitle("Leader Services");
 
@@ -480,11 +714,14 @@ public class HelloController {
         leaderGrid.add(createEventButton, 1, 0);
         leaderGrid.add(addMemberButton, 2, 0);
 
-        createTripButton.setOnAction(e -> showCreateTripWindow());
+        createTripButton.setOnAction(e -> {leaderStage.close();
+            showCreateTripWindow();});
 
-        createEventButton.setOnAction(e -> showCreateEventWindow());
+        createEventButton.setOnAction(e -> {leaderStage.close();
+            showCreateEventWindow();});
 
-        addMemberButton.setOnAction(e -> showAddMemberWindow());
+        addMemberButton.setOnAction(e -> {leaderStage.close();
+            showAddMemberWindow();});
 
         Scene leaderScene = new Scene(leaderGrid, 300, 100);
         leaderStage.setScene(leaderScene);
@@ -492,12 +729,9 @@ public class HelloController {
     }
 
 
-////////////////////////////////////////////////////////////////
-    //
-
 
     private void showStudentServices(String familyType) {
-        Family currentFamily = createFamilyInstance(familyType);
+
         Stage studentStage = new Stage();
         studentStage.setTitle("Student Services");
 
@@ -512,9 +746,13 @@ public class HelloController {
         studentGrid.add(joinFamilyButton, 0, 0);
         studentGrid.add(viewTripsButton, 1, 0);
 
-        joinFamilyButton.setOnAction(e -> showJoinFamilyWindow());
+        joinFamilyButton.setOnAction(e -> {
+            studentStage.close();
+            showJoinFamilyWindow();});
 
-        viewTripsButton.setOnAction(e -> showViewTripsWindow());
+        viewTripsButton.setOnAction(e -> {
+            studentStage.close();
+            showViewTripsWindow();});
 
         Scene studentScene = new Scene(studentGrid, 300, 100);
         studentStage.setScene(studentScene);
@@ -522,16 +760,10 @@ public class HelloController {
     }
 
 
-    private Family createFamilyInstance(String familyType) {
-        Family family = null;
-        if (familyType.equals("Resala Family")) {
-            family = new ResalaFamily(null, null);
-        } else if (familyType.equals("Fee Life Makers")) {
-            family = new FeeLifeMakers(null, null);
-        }
-        return family;
-    }
+
 //*************************************************************************
+
+    ///اشتراك الطالب في الاسره ورؤيه الرحلات
 
 
 
@@ -557,8 +789,10 @@ public class HelloController {
             FamilyMemberRole selectedRole = roleComboBox.getValue();
             if (selectedRole != null) {
                 HashMap<Student, FamilyMemberRole> memberRoleHashMap = new HashMap<>();
-                memberRoleHashMap.put(null, selectedRole); // يجب استبدال null بالطالب الفعلي
-                Family currentFamily = null;
+                Student s1=new Student("youssef",25,GENDER.MALE,"hggh,",90.0,20,121);
+                memberRoleHashMap.put(s1, selectedRole);
+                List<String> l1=new ArrayList<>();
+                FeeLifeMakers currentFamily =new FeeLifeMakers(s1,l1);
                 currentFamily.enrollFamilyMembers(memberRoleHashMap);
 
                 // عرض رسالة تأكيد
@@ -576,7 +810,7 @@ public class HelloController {
         Stage viewTripsStage = new Stage();
         viewTripsStage.setTitle("View Trips");
 
-        // استخدام جدول لعرض الرحلات
+
 
         TableView<Trip> tripsTable = new TableView<>();
         TableColumn<Trip, String> locationColumn = new TableColumn<>("Location");
@@ -602,7 +836,7 @@ public class HelloController {
         Scene viewTripsScene = new Scene(vbox, 400, 300);
         viewTripsStage.setScene(viewTripsScene);
         reserveButton.setOnAction(e -> {
-            // احجز الرحلة المحددة (يجب استبدالها بالتعليق الفعلي)
+            // احجز الرحلة المحددة
             Trip selectedTrip = tripsTable.getSelectionModel().getSelectedItem();
             if (selectedTrip != null) {
                 showAlert("Reserve Trip", "Trip reserved successfully.", Alert.AlertType.INFORMATION);
@@ -622,10 +856,11 @@ public class HelloController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-    
-    
-    
+
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //عمل رحله جديده  بواسطه الليدر////////////////////////////////
     private void showCreateTripWindow() {
         Stage createTripStage = new Stage();
         createTripStage.setTitle("Create Trip");
@@ -641,7 +876,7 @@ public class HelloController {
         TextField priceField = new TextField();
         TextField DesField=new TextField();
 
-        Button createButton = new Button("Create Trip");
+        Button createButton = new Button("Create ");
         createTripGrid.add(new Label("Location:"), 0, 0);
         createTripGrid.add(locationField, 1, 0);
         createTripGrid.add(new Label("Title:"), 0, 1);
@@ -658,16 +893,12 @@ public class HelloController {
 
         createButton.setOnAction(e -> {
             try {
-                String location = locationField.getText();
-                String title = titleField.getText();
-                String date = dateField.getText();
-                String description=DesField.getText();
-                double price = Double.parseDouble(priceField.getText());
 
-                // إنشاء رحلة وإضافتها إلى العائلة (يجب استبدالها بالتعليق الفعلي)
-                Trip trip = new Trip(location, title,description, date, price);
-                FeeLifeMakers currentFamily=new FeeLifeMakers(null,null);
-                currentFamily.createTrip(trip);
+
+            Database.creatTrips(locationField.getText(),
+                    titleField.getText(),
+                    dateField.getText(),
+                    Integer.parseInt(priceField.getText()),DesField.getText());{}
 
                 showAlert("Create Trip", "Trip created successfully.", Alert.AlertType.INFORMATION);
                 createTripStage.close();
@@ -712,19 +943,18 @@ public class HelloController {
         createEventGrid.add(eventIdField, 1, 5);
         createEventGrid.add(createButton, 0, 6, 2, 1);
 
-        createButton.setOnAction(e -> {
-            try {
-                String eventName = eventNameField.getText();
-                String description = descriptionField.getText();
-                String location = locationField.getText();
-                int startAt = Integer.parseInt(startAtField.getText());
-                int endAt = Integer.parseInt(endAtField.getText());
-                int eventId = Integer.parseInt(eventIdField.getText());
 
-                // إنشاء حدث وإضافته إلى العائلة (يجب استبدالها بالتعليق الفعلي)
-                FamilyEvent event = new FamilyEvent(eventName, description, location, startAt, endAt, eventId);
-                FeeLifeMakers currentFamily=new FeeLifeMakers(null,null);
-                currentFamily.createEvent(event);
+
+        createButton.setOnAction(e -> {
+
+            try {
+                Database.creatEvent(eventNameField.getText(),
+                        descriptionField.getText(),
+                        locationField.getText(),Integer.parseInt(startAtField.getText()),
+                        Integer.parseInt(endAtField.getText()),
+                        Integer.parseInt(eventIdField.getText()));{
+
+                }
 
                 showAlert("Create Event", "Event created successfully.", Alert.AlertType.INFORMATION);
                 createEventStage.close();
@@ -784,27 +1014,28 @@ public class HelloController {
         addMemberGrid.add(addButton, 0, 7, 2, 1);
 
         addButton.setOnAction(e -> {
+
+
+
             try {
-                int studentId = Integer.parseInt(studentIdField.getText());
-                String name= nameField.getText();
-                GENDER gender=GENDER.valueOf(genderField.getText().toUpperCase());
+                Database.ADDmember(nameField.getText(),
+                        Integer.parseInt(studentIdField.getText()),
+                        GENDER.valueOf(genderField.getText().toUpperCase()),
+                        locationField.getText(),
+                        Integer.parseInt(ageField.getText()),
+                        Integer.parseInt(phoneNumberField.getText()),
+                        FamilyMemberRole.valueOf(memberRoleField.getText().toUpperCase()));{}
 
-                FamilyMemberRole memberRole = FamilyMemberRole.valueOf(memberRoleField.getText().toUpperCase());
 
-                String location = locationField.getText();
-                int age = Integer.parseInt(ageField.getText());
-                int phoneNumber = Integer.parseInt(phoneNumberField.getText());
 
-                // إضافة عضو جديد إلى العائلة (يجب استبدالها بالتعليق الفعلي)
-                Student newMember = new Student(name,studentId,gender,location, 55.0,age,phoneNumber); // يجب استبدالها بالطالب الفعلي
-                HashMap<Student, FamilyMemberRole> memberRoleHashMap = new HashMap<>();
-                memberRoleHashMap.put(newMember, memberRole);
-                FeeLifeMakers currentFamily=new FeeLifeMakers(null,null);
-                currentFamily.enrollFamilyMembers(memberRoleHashMap);
+
 
                 showAlert("Add Member", "New member added successfully.", Alert.AlertType.INFORMATION);
-                //addMemberStage.close();
+
+
+                addMemberStage.close();
             } catch (Exception ex) {
+
                 showAlert("Add Member", "Invalid input values.", Alert.AlertType.WARNING);
 
             }
@@ -889,14 +1120,14 @@ public class HelloController {
         );
 
         confirmButton.setOnAction(e -> {
+
+            Database.registeratdepartment(nameField.getText(), passwordField.getText());
             String studentName = nameField.getText();
             String password = passwordField.getText();
 
             // Add your logic here to check the validity of name and password
             if (isValidInput(studentName, password)) {
-                // Logic to register the student
 
-                // Display a confirmation message
                 showAlert("Registration", "Registration successful.", Alert.AlertType.INFORMATION);
 
                 registrationStage.close();
@@ -908,6 +1139,11 @@ public class HelloController {
         Scene registrationScene = new Scene(registrationLayout, 300, 200);
         registrationStage.setScene(registrationScene);
         registrationStage.show();
+    }
+
+
+    private boolean isValidInput(String name, String password) {
+        return !name.isEmpty() && !password.isEmpty();
     }
 
     private void showCoursesWindow(String Department) {
@@ -929,18 +1165,15 @@ public class HelloController {
         );
 
         confirmButton.setOnAction(e -> {
-            String studentName = nameField.getText();
-            String password = passwordField.getText();
 
-            // Add your logic here to check the validity of name and password
-            if (isValidInput(studentName, password)) {
+
+            if(Database.entertocourse(nameField.getText(),passwordField.getText())==true){
                 view();
-                // Logic to view courses
-
                 coursesStage.close();
-            } else {
-                showAlert("Courses", "Please enter a valid name and password.", Alert.AlertType.WARNING);
+
+
             }
+
         });
 
         Scene coursesScene = new Scene(coursesLayout, 300, 200);
@@ -948,15 +1181,9 @@ public class HelloController {
         coursesStage.show();
     }
 
-    private boolean isValidInput(String name, String password) {
-        return !name.isEmpty() && !password.isEmpty();
-    }
 
 
 
-
-
-        /////////////////////////////////////////////////////////////////////////////////
 
     public void view() {
         Stage primaryStage=new Stage();
@@ -975,6 +1202,7 @@ public class HelloController {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 
     private void ViewCoursesWindow() {
         Stage coursesStage = new Stage();
@@ -1011,5 +1239,413 @@ public class HelloController {
     }
 
 
+    //////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    public void start123() {
+
+        Stage primaryStage = new Stage();
+        List<Employee> employees = new ArrayList<>();
+        List<Course> courses = new ArrayList<>();
+
+        double score = 4.5;
+
+
+        // Create UI components
+
+        Button AddAssignmentButton = new Button("Add Assignments");
+        AddAssignmentButton.setOnAction(e ->AddAssignment());
+        Button showCourseButton = new Button("Show Course");
+        showCourseButton.setOnAction(e ->showCourse());
+
+
+
+        // Create layout
+        VBox layout = new VBox(10);
+        layout.setPadding(new Insets(10));
+        layout.getChildren().addAll(showCourseButton,AddAssignmentButton);
+
+        // Create scene and set stage
+        Scene scene = new Scene(layout, 300, 200);
+        primaryStage.setTitle("Department App");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
+
+
+    public void AddAssignment() {
+        Stage primaryStage =new Stage();
+        primaryStage.setTitle("Add Assignment");
+
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+        // Create labels and input fields
+        Label subjectLabel = new Label("Subject:");
+        TextField subjectField = new TextField();
+
+        Label deadlineLabel = new Label("Deadline:");
+        TextField deadlineField = new TextField();
+
+        Label descriptionLabel = new Label("Description:");
+        TextField description = new TextField();
+
+        // Create a button to add the assignment
+        Button addButton = new Button("Add Assignment");
+
+        // Add labels and input fields to the grid
+        grid.add(subjectLabel, 0, 0);
+        grid.add(subjectField, 1, 0);
+
+        grid.add(deadlineLabel, 0, 1);
+        grid.add(deadlineField, 1, 1);
+
+        grid.add(descriptionLabel, 0, 2);
+        grid.add(description, 1, 2);
+
+        grid.add(addButton, 0, 3, 2, 1); // Span two columns for the button
+
+        // Define action for the button
+        addButton.setOnAction(e -> {
+
+            Database.ADDassigment(subjectField.getText(),Integer.parseInt(deadlineField.getText()),description.getText());
+            // Get input values
+            String subject = subjectField.getText();
+            String deadline = deadlineField.getText();
+            String descriptions = description.getText();
+
+            // You can add code here to save the assignment details, e.g., to a database
+
+            // Display a confirmation or take further actions as needed
+            System.out.println("Assignment added:\nSubject: " + subject +
+                    "\nDeadline: " + deadline +
+                    "\nDescription: " + description);
+        });
+
+        // Create a scene and set it to the stage
+        Scene scene = new Scene(grid, 400, 300);
+        primaryStage.setScene(scene);
+
+        // Show the stage
+        primaryStage.show();
+    }
+    public void showCourse() {
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Course Information");
+
+        // Sample data for courses
+        ObservableList<Course> courseData = FXCollections.observableArrayList();
+
+
+        // Create a TableView to display course data
+        TableView<Course> tableView = new TableView<>();
+        tableView.setItems(courseData);
+
+        // Create columns for TableView
+        TableColumn<Course, String> nameColumn = new TableColumn<>("Course Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+
+        TableColumn<Course, String> instructorColumn = new TableColumn<>("Instructor");
+        instructorColumn.setCellValueFactory(new PropertyValueFactory<>("instructorName"));
+
+        TableColumn<Course, Integer> hoursColumn = new TableColumn<>("Hours");
+        hoursColumn.setCellValueFactory(new PropertyValueFactory<>("hours"));
+
+        TableColumn<Course, Integer> gradeColumn = new TableColumn<>("Grade");
+        gradeColumn.setCellValueFactory(new PropertyValueFactory<>("grade"));
+
+        TableColumn<Course, Integer> studentsColumn = new TableColumn<>("Students");
+        studentsColumn.setCellValueFactory(new PropertyValueFactory<>("students"));
+
+        // Add columns to TableView
+        tableView.getColumns().addAll(nameColumn, instructorColumn, hoursColumn, gradeColumn, studentsColumn);
+
+        // Create a VBox layout to hold the TableView
+        VBox vbox = new VBox(tableView);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+
+        // Create a scene and set it to the stage
+        Scene scene = new Scene(vbox, 600, 400);
+        primaryStage.setScene(scene);
+
+        // Show the stage
+        primaryStage.show();
+}
+
+
+
+
+
+
+
+     ///////////////////////////////////////////////////////////////////////
+    //// صلاحيات العميد////////////////
+
+
+    public void start000() {
+        Stage primaryStage = new Stage();
+
+        primaryStage.setTitle("Course Management App");
+
+        Button addSubjectButton = new Button("Add Subject");
+        Button addDepartmentButton = new Button("Add Department");
+        Button addEmployeeButton = new Button("Add Employee");
+        Button showEmployeesButton = new Button("Show Employees");
+
+
+
+        VBox root = new VBox(10, addSubjectButton, addDepartmentButton,addEmployeeButton,showEmployeesButton);
+
+        addSubjectButton.setOnAction(e -> openAddSubjectDialog());
+        addDepartmentButton.setOnAction(e -> openAddDepartmentDialog());
+        showEmployeesButton.setOnAction(e -> showEmployees());
+        addEmployeeButton.setOnAction(e -> onHelloButtonClick2());
+
+        Scene scene = new Scene(root, 300, 200);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    private void openAddSubjectDialog() {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Add Subject");
+
+
+        TextField subjectNameField = new TextField();
+        TextField departmentField = new TextField();
+        TextField gradeField = new TextField();
+        TextField professorField = new TextField();
+
+        Button addButton = new Button("Add");
+        addButton.setOnAction(e -> {
+
+            Database.addsupject(subjectNameField.getText(),CollegeDepartments.valueOf(departmentField.getText().toUpperCase()) , Integer.parseInt(gradeField.getText()),professorField.getText());
+
+            System.out.println("Subject Added!");
+            dialog.close();
+        });
+
+        VBox dialogVBox = new VBox(10, new Label("Subject Name:"), subjectNameField,
+                new Label("Department:"), departmentField,
+                new Label("Grade:"), gradeField,
+                new Label("Professor:"), professorField,
+                addButton);
+
+        Scene dialogScene = new Scene(dialogVBox, 350, 300);
+        dialog.setScene(dialogScene);
+        dialog.showAndWait();
+}
+
+
+    private void openAddDepartmentDialog() {
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Add Department");
+
+
+        TextField departmentNameField = new TextField();
+        TextArea professorsArea = new TextArea();
+        TextArea subjectsArea = new TextArea();
+
+        Button addButton = new Button("Add");
+        addButton.setOnAction(e -> {
+
+
+            Database.adddepartment(departmentNameField.getText(),professorsArea.getText(),subjectsArea.getText());
+
+
+            System.out.println("Department Added!");
+            dialog.close();
+        });
+
+        VBox dialogVBox = new VBox(10, new Label("Department Name:"), departmentNameField,
+                new Label("Professors:"), professorsArea,
+                new Label("Subjects:"), subjectsArea,
+                addButton);
+
+        Scene dialogScene = new Scene(dialogVBox, 350, 300);
+        dialog.setScene(dialogScene);
+        dialog.showAndWait();
+    }
+
+    public void showEmployees () {
+        Stage primaryStage =new Stage();
+        primaryStage.setTitle("Employee Information");
+
+        // Sample data for employees
+        ObservableList<Employee> employeeData = FXCollections.observableArrayList();
+
+        // Create a TableView to display employee data
+        TableView<Employee> tableView = new TableView<>();
+        tableView.setItems(employeeData);
+
+        // Create columns for TableView
+        TableColumn<Employee, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Employee, Integer> idColumn = new TableColumn<>("National ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("nationalId"));
+
+        TableColumn<Employee, String> genderColumn = new TableColumn<>("Gender");
+        genderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
+
+        TableColumn<Employee, String> locationColumn = new TableColumn<>("Location");
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        TableColumn<Employee, Integer> ageColumn = new TableColumn<>("Age");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        TableColumn<Employee, Integer> phoneColumn = new TableColumn<>("Phone Number");
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+
+        TableColumn<Employee, String> jobColumn = new TableColumn<>("Job Title");
+        jobColumn.setCellValueFactory(new PropertyValueFactory<>("jobTitle"));
+
+        TableColumn<Employee, String> dateColumn = new TableColumn<>("Employment Date");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("employmentDate"));
+
+        // Add columns to TableView
+        tableView.getColumns().addAll(nameColumn, idColumn, genderColumn, locationColumn, ageColumn, phoneColumn, jobColumn, dateColumn);
+
+        // Create a scene and set it to the stage
+        Scene scene = new Scene(new ScrollPane(tableView), 800, 400);
+        primaryStage.setScene(scene);
+
+        // Show the stage
+        primaryStage.show();
+}
+
+
+
+
+    public void onHelloButtonClick2() {
+
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Person Information");
+
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+        // Create labels and text fields
+        Label nameLabel = new Label("Name:");
+        TextField nameField = new TextField();
+        Label idLabel = new Label("National ID:");
+        TextField idField = new TextField();
+        Label genderLabel = new Label("Gender:");
+        TextField genderField = new TextField();
+        Label locationLabel = new Label("Location:");
+        TextField locationField = new TextField();
+        Label ageLabel = new Label("Age:");
+        TextField ageField = new TextField();
+        Label phoneLabel = new Label("Phone Number:");
+        TextField phoneField = new TextField();
+        Label jopLabel = new Label("JopTitle:");
+        TextField jopfield = new TextField();
+        Label emLabel = new Label("employeedate:");
+        TextField emfield = new TextField();
+        // Labels to display person information
+        Label displayLabel = new Label("");
+        Button Next = new Button("Next");
+        ComboBox<String> setDepartment = new ComboBox<>();
+        Next.setOnAction(event ->{
+
+            primaryStage.close();
+
+                Database.elogin(nameField.getText(),Integer.parseInt(idField.getText()),
+                        GENDER.valueOf(genderField.getText().toUpperCase()),
+                                locationField.getText(),
+                                Integer.parseInt(ageField.getText()),
+                                Integer.parseInt(phoneField.getText()),
+                                JopTitle.valueOf(jopfield.getText().toUpperCase()),
+                                 emfield.getText(),
+                                 CollegeDepartments.valueOf(setDepartment.getValue()));
+
+
+            try {
+                String jopInput = jopfield.getText().toUpperCase();
+
+                // التحقق من صحة قيمة الوظيفة
+                boolean validJobTitle = false;
+                for (JopTitle validTitle : JopTitle.values()) {
+                    if (jopInput.equals(validTitle.name())) {
+                        validJobTitle = true;
+                        break;
+                    }
+                }
+
+                if (!validJobTitle) {
+                    showAlert("Job Title", "Invalid job title.", Alert.AlertType.WARNING);
+                } else {
+
+                    showAlert("Registration", "Registration successful.", Alert.AlertType.INFORMATION);
+                }
+            } catch (Exception e) {
+                showAlert("Registration", "Error processing input.", Alert.AlertType.WARNING);
+            }
+        });
+
+
+        Label setDepartmentlabel = new Label("Select Department");
+        setDepartment.getItems().addAll("CS", "CONTROL", "COMMUNICATION","NONE");
+        setDepartment.setPromptText("Select Department");
+        // setDepartment.setOnAction(event -> );
+
+
+        // Add labels and text fields to the grid
+        grid.add(nameLabel, 0, 0);
+        grid.add(nameField, 1, 0);
+
+        grid.add(idLabel, 0, 1);
+        grid.add(idField, 1, 1);
+
+        grid.add(genderLabel, 0, 2);
+        grid.add(genderField, 1, 2);
+
+        grid.add(locationLabel, 0, 3);
+        grid.add(locationField, 1, 3);
+
+        grid.add(ageLabel, 0, 4);
+        grid.add(ageField, 1, 4);
+
+        grid.add(phoneLabel, 0, 5);
+        grid.add(phoneField, 1, 5);
+
+        grid.add(jopLabel, 0, 6);
+        grid.add(jopfield, 1, 6);
+
+        grid.add(emLabel, 0, 7);
+        grid.add(emfield, 1, 7);
+
+        grid.add(setDepartmentlabel, 0, 8);
+        grid.add(setDepartment, 1, 8, 2, 1);
+
+
+        grid.add(Next, 0, 10, 2, 1); // Span two columns for the display label
+        grid.add(displayLabel, 0, 11, 2, 1);
+
+
+        // Create a scene and set it to the stage
+        Scene scene = new Scene(grid, 400, 400);
+        primaryStage.setScene(scene);
+
+        // Show the stage
+        primaryStage.show();
+
+
+    }
+
+
+
+
+
+    }
+
+
 
